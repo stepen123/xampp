@@ -1,0 +1,124 @@
+1. Buat database toko_kelontong
+	CREATE DATABASE toko_kelontong20;
+	Query OK, 1 row affected (0.080 sec)
+
+2. Aktifkan database toko_kelontong
+	USE toko_kelontong20;
+	Database changed
+	MariaDB [toko_kelontong20]
+
+3. Buat tabel barang, dengan kolom
+   id_barang CHAR(5),
+   nama_barang VARCHAR(50),
+   harga_beli INT;
+
+	MariaDB [toko_kelontong20]> CREATE TABLE barang(
+    -> id_barang CHAR (5),
+    -> nama_barang VARCHAR (50),
+    -> harga_beli INT
+    -> );
+Query OK, 0 rows affected (0.578 sec)
+
+4. jadikan id_barang sebagai PRIMARY KEY
+	ALTER TABLE barang
+	ADD PRIMARY KEY (id_barang);
+Query OK, 0 rows affected (0.698 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+5. Tambahkan kolom baru pada tabel barang
+ALTER TABLE barang 	
+ADD harga_jual INT,
+ADD stok INT;
+Query OK, 0 rows affected (0.145 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+6.Tampilkan struktur tabel barang
+	DESC barang;
+MariaDB [toko_kelontong20]> DESC barang;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| id_barang   | char(5)     | NO   | PRI | NULL    |       |
+| nama_barang | varchar(50) | YES  |     | NULL    |       |
+| harga_beli  | int(11)     | YES  |     | NULL    |       |
+| harga_jual  | int(11)     | YES  |     | NULL    |       |
+| stok        | int(11)     | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.126 sec)
+
+MariaDB [toko_kelontong20]>
+
+7.ubah nama kolom stok menjadi jml_barang
+ 	ALTER TABLE barang
+	CHANGE stok jml_barang INT;
+Query OK, 0 rows affected (0.149 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+8. buat tabel penjualan
+ id_penjualan INT,
+ tgl_penjualan INT,
+ id_barang CHAR(5),
+ jumlah INT
+
+	CREATE TABLE penjualan (
+ 	id_penjualan INT,
+   	tgl_penjualan INT,
+  	id_barang CHAR(5),
+ 	JUMLAH INT;
+Query OK, 0 rows affected (0.236 sec)
+
+9. jadikan id_penjualan sebagai PRIMARY KEY dan 
+   jadikan id_barang sebagai FOREIGN KEY
+	ALTER TABLE penjualan
+	ADD PRIMARY KEY (id_penjualan),
+	ADD FOREIGN KEY (id_barang)  REFERENCES barang(id_barang);
+Query OK, 0 rows affected (1.136 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+10. Tambahkan 3 baris pada tabel barang
+	INSERT INTO barang (id_barang, nama_barang)
+	VALUES
+    ('1', 'Swaloww'),
+    ('2', 'Ember'),
+    ('3', 'Sapu');
+Query OK, 3 rows affected (0.206 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+11. Tambilkan semua kolom pada tabel barang
+
+	SELECT * FROM barang;
++-----------+-------------+------------+------------+------------+
+| id_barang | nama_barang | harga_beli | harga_jual | jml_barang |
++-----------+-------------+------------+------------+------------+
+| 1         | Swaloww     |       NULL |       NULL |       NULL |
+| 2         | Ember       |       NULL |       NULL |       NULL |
+| 3         | Sapu        |       NULL |       NULL |       NULL |
++-----------+-------------+------------+------------+------------+
+3 rows in set (0.001 sec)
+
+MariaDB [toko_kelontong20]>
+
+12. Tampilkan struktur tabel pemjualan
+	DESC penjualan;
++---------------+---------+------+-----+---------+-------+
+| Field         | Type    | Null | Key | Default | Extra |
++---------------+---------+------+-----+---------+-------+
+| id_penjualan  | int(11) | NO   | PRI | NULL    |       |
+| tgl_penjualan | int(11) | YES  |     | NULL    |       |
+| id_barang     | char(5) | YES  | MUL | NULL    |       |
+| JUMLAH        | int(11) | YES  |     | NULL    |       |
++---------------+---------+------+-----+---------+-------+
+4 rows in set (0.031 sec)
+
+MariaDB [toko_kelontong20]>
+
+13. Tammbahkan 6 baris pada tabel penjualan
+	INSERT INTO barang (id_penjualan, tgl_penjualan,id_barang, JUMLAH)
+	VALUES (1,2023-06-11,1,2),
+   	(2,2023-05-11,2,1),
+	(3,2023-06-11,1,3),
+	(4,2023-07-15,3,2),
+	(5,2023-06-22,3,5),
+	(6,2023-06-10,2,6);
+
+
